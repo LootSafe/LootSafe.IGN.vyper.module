@@ -56,4 +56,4 @@ def changeAddress (newAddress: address):
     self.names[newAddress] = ign
     
     # Remove old address registration
-    self.names[msg.sender] = null
+    self.names[msg.sender] = None
