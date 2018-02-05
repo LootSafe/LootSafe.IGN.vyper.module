@@ -1,0 +1,1 @@
+# LootSafe.IGN.vyper.module
