@@ -22,13 +22,12 @@ def __init__ ():
     self.owner = msg.sender
 
 @public
-def _tag (addr: address, ign: bytes32) -> bytes <= 32:
+def _tag (addr: address, ign: bytes <= 32) -> bytes <= 32:
     # Creates a tagged IGN for example Matt#ef25d
-    delimiter = "#"
-    name = slice(concat('', ign), start=0, len=25)
-    addrHash = slice(concat('', sha3(as_bytes32(addr))), start=0, len=5)
-    tag = concat(name, delimiter, addrHash)
-    return tag
+    name = slice(ign, start=0, len=25)
+    bytesAddr = concat('', sha3(as_bytes32(addr)))
+    addrHash = slice(bytesAddr, start=0, len=5)
+    return concat(name, "#", addrHash)
     
 # -------------------------------------------
 # -------------- Getters --------------------
