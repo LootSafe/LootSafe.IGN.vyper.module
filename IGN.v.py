@@ -21,6 +21,15 @@ addresses: public(address[bytes32])
 def __init__ ():
     self.owner = msg.sender
 
+@public
+def _tag (addr: address, ign: bytes32) -> bytes <= 32:
+    # Creates a tagged IGN for example Matt#ef25d
+    delimiter = "#"
+    name = slice(concat('', ign), start=0, len=25)
+    addrHash = slice(concat('', sha3(as_bytes32(addr))), start=0, len=5)
+    tag = concat(name, delimiter, addrHash)
+    return tag
+    
 # -------------------------------------------
 # -------------- Getters --------------------
 # -------------------------------------------
@@ -39,6 +48,9 @@ def getAddress (ign: bytes32) -> address:
 def register (ign: bytes32):
     # If address is not already registered to an IGN register it
     assert self.names[msg.sender] == as_bytes32(0)
+    # Expect username to be no more than 25 bytes
+    assert len(concat('', ign)) <= 25
+
     self.names[msg.sender] = ign
     self.addresses[ign] = msg.sender
     log.Register(ign, msg.sender)
