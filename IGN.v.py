@@ -7,10 +7,16 @@ owner: address
 # ---------- State Variables ----------------
 # -------------------------------------------
 
+# Represents a profile for the IGN
+profiles: public({
+    ign: bytes <= 32,
+    age: timestamp
+}[address])
 # Represents the IGN associated to an address
 names: public((bytes <= 32)[address])
 # Represents the address associated to an IGN
 addresses: public(address[bytes <= 32])
+
 
 # -------------------------------------------
 # -------------- Internal -------------------
@@ -36,6 +42,14 @@ def getAddress (ign: bytes <= 32) -> address:
     # Return the address of an IGN
     return self.addresses[ign]
 
+@public
+def getProfile (addr: address) -> (bytes <= 32, timestamp):
+    # Return the profile of an address
+    return (
+        self.profiles[addr].ign,
+        self.profiles[addr].age
+    )
+
 # -------------------------------------------
 # -------------- External -------------------
 # -------------------------------------------
@@ -51,7 +65,10 @@ def register (ign: bytes <= 26):
     # Set username assignment
     self.names[msg.sender] = taggedName
     self.addresses[taggedName] = msg.sender
-    
+    self.profiles[msg.sender] = {
+        ign: ign,
+        age: block.timestamp
+    }
     log.Register(taggedName, msg.sender)
 
 @public
@@ -66,7 +83,10 @@ def changeAddress (newAddress: address):
     self.addresses[ign] = newAddress
     # Change name associated to address
     self.names[newAddress] = ign
+    # Transfer profile
+    self.profiles[newAddress] = self.profiles[msg.sender]
     # Remove old address registration
     self.names[msg.sender] = None
+    self.profiles[msg.sender] = None
     
     log.Update(ign, msg.sender, newAddress)
