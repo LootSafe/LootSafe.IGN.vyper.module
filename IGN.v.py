@@ -45,33 +45,28 @@ def getAddress (ign: bytes <= 32) -> address:
 def register (ign: bytes <= 26):
     # If address is not already registered to an IGN register it
     assert len(self.names[msg.sender]) == 0
-
+    # Tag the username to mitigate duplicate usernames
     taggedName = self._tag(msg.sender, ign)
-    
     # Ensure this name tag combination is not already registered
     assert as_bytes32(self.addresses[taggedName]) == as_bytes32(0)
-    
+    # Set username assignment
     self.names[msg.sender] = taggedName
     self.addresses[taggedName] = msg.sender
+    
     log.Register(taggedName, msg.sender)
 
 @public
 def changeAddress (newAddress: address):
     # Expect sender to have an IGN registered
     assert len(self.names[msg.sender]) > 0
-    
     # Expect new address not to be registered already
     assert len(self.names[msg.sender]) == 0
-    
     # Get current IGN
     ign = self.names[msg.sender]
-    
     # Change address associated to IGN
     self.addresses[ign] = newAddress
-    
     # Change name associated to address
     self.names[newAddress] = ign
-    
     # Remove old address registration
     self.names[msg.sender] = None
     
