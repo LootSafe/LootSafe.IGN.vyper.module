@@ -1,8 +1,5 @@
 import pytest
 
-from ethereum.abi import ValueOutOfBounds
-from ethereum.tools import tester
-
 @pytest.fixture
 def ign_tester(t):
     from vyper import compiler
