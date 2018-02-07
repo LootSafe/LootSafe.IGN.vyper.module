@@ -36,7 +36,6 @@ def getAddress (ign: bytes <= 32) -> address:
     # Return the address of an IGN
     return self.addresses[ign]
 
-
 # -------------------------------------------
 # -------------- External -------------------
 # -------------------------------------------
