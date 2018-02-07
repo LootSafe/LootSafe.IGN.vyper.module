@@ -20,7 +20,7 @@ addresses: public(address[bytes <= 32])
 def __init__ ():
     self.owner = msg.sender
 
-@public
+@private
 def _tag (addr: address, ign: bytes <= 26) -> bytes <= 32:
     # Creates a tagged IGN for example Matt#ef25d
     bytesAddr = concat('', sha3(as_bytes32(addr)))
