@@ -32,7 +32,7 @@ def _tag (addr: address, ign: bytes <= 26) -> bytes <= 32:
 # -------------------------------------------
 
 @public
-def getAddress (ign: bytes <= 25) -> address:
+def getAddress (ign: bytes <= 32) -> address:
     # Return the address of an IGN
     return self.addresses[ign]
 
