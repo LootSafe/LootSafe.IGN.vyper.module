@@ -1,3 +1,5 @@
+# HEADS UP! I haven't been audited, you should be very careful using me!
+
 Register: __log__({ign: bytes <= 32, addr: address})
 Update: __log__({ign: bytes <= 32, oldAddr: address, newAddr: address})
 
